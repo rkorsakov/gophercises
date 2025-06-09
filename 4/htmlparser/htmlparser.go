@@ -2,8 +2,8 @@ package htmlparser
 
 import (
 	"golang.org/x/net/html"
+	"io"
 	"log"
-	"os"
 	"strings"
 )
 
@@ -19,13 +19,8 @@ func (l Link) String() string {
 		"}"
 }
 
-func ParseHTML(filename string) []Link {
-	file, err := os.Open(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-	doc, err := html.Parse(file)
+func ParseHTML(r io.Reader) []Link {
+	doc, err := html.Parse(r)
 	if err != nil {
 		log.Fatal(err)
 	}
